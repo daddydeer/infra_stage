@@ -5,32 +5,35 @@ resource "random_string" "bucket_name" {
   upper   = false
 }
 
+# Local values — все имена/часто используемые значения в одном месте
 locals {
-  # "Имя бакета" (папки) как в курсе: prefix + terraform-bucket + random
-  bucket_dir_name = "${var.name_prefix}-terraform-bucket-${random_string.bucket_name.result}"
-  bucket_path     = "${path.module}/${local.bucket_dir_name}"
+  linux_vm_name = "${var.name_prefix}-linux-vm"
 
-  # "Сеть/подсеть" — берём первый ключ из map (как в примере курса)
   subnet_name = keys(var.subnets)[0]
   subnet_cidr = var.subnets[local.subnet_name][0]
+
+  bucket_name = "${var.name_prefix}-terraform-bucket-${random_string.bucket_name.result}"
+  bucket_path = "${path.module}/${local.bucket_name}"
+
+  vm_resources_file = "${path.module}/vm_resources.json"
 }
 
 # --- "VM" (симуляция ресурсов) ---
-# Лучше использовать terraform_data, чтобы изменение выглядело как "~ update in-place"
+# terraform_data удобно тем, что при изменениях будет показывать "~ update in-place"
 resource "terraform_data" "vm" {
   input = {
-    name       = "${var.name_prefix}-linux-vm"
-    cores      = var.instance_resources.cores
-    memory_gb  = var.instance_resources.memory_gb
-    subnet     = local.subnet_name
+    name        = local.linux_vm_name
+    cores       = var.instance_resources.cores
+    memory_gb   = var.instance_resources.memory_gb
+    subnet      = local.subnet_name
     subnet_cidr = local.subnet_cidr
-    project_id = var.project_id
+    project_id  = var.project_id
   }
 }
 
 # (опционально) Запишем эти "ресурсы VM" в файл для наглядности
 resource "local_file" "vm_resources" {
-  filename = "${path.module}/vm_resources.json"
+  filename = local.vm_resources_file
   content  = jsonencode(terraform_data.vm.input)
 }
 

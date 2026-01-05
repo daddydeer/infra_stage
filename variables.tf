@@ -5,16 +5,16 @@ variable "name_prefix" {
 }
 
 variable "project_id" {
-  description = "(Required) - Идентификатор окружения/проекта (dev/stage/prod). Используется для меток/имён."
+  description = "(Required) - Идентификатор окружения/проекта (dev/stage/prod)."
   type        = string
 }
 
 variable "instance_resources" {
   description = <<EOF
-  (Required) Симуляция ресурсов ВМ:
-    - cores: количество vCPU
-    - memory_gb: объём RAM в ГБ
-  EOF
+(Required) Симуляция ресурсов ВМ:
+  - cores: количество vCPU
+  - memory_gb: объём RAM в ГБ
+EOF
 
   type = object({
     cores     = number
