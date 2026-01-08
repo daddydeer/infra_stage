@@ -1,3 +1,8 @@
+output "instance_public_ip_address" {
+  description = "Public IP address of this VPS."
+  value       = local.public_ip
+}
+
 output "vm_name" {
   description = "Simulated VM name."
   value       = local.linux_vm_name
@@ -32,3 +37,4 @@ output "vm_resources_file" {
   description = "Path to generated vm_resources.json file."
   value       = local_file.vm_resources.filename
 }
+
