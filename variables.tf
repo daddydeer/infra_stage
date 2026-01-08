@@ -5,15 +5,15 @@ variable "name_prefix" {
 }
 
 variable "project_id" {
-  description = "(Required) - Идентификатор окружения/проекта (dev/stage/prod)."
+  description = "(Required) - Environment/project id (dev/stage/prod)."
   type        = string
 }
 
 variable "instance_resources" {
   description = <<EOF
-(Required) Симуляция ресурсов ВМ:
-  - cores: количество vCPU
-  - memory_gb: объём RAM в ГБ
+(Required) Simulated VM resources:
+  - cores: vCPU count
+  - memory_gb: RAM in GiB
 EOF
 
   type = object({
@@ -23,7 +23,7 @@ EOF
 }
 
 variable "subnets" {
-  description = "(Optional) - A map of subnet names to their CIDR block ranges (симуляция)."
+  description = "(Optional) - A map of subnet names to CIDR ranges (simulation)."
   type        = map(list(string))
   default = {
     "private-subnet" = ["192.168.10.0/24"]

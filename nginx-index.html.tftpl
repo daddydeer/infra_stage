@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Terraform provisioned</title>
+</head>
+<body>
+  <h1>Terraform provisioned</h1>
+
+  <h2>Public endpoint</h2>
+  <p><b>Public IP:</b> ${public_ip}</p>
+
+  <h2>Simulated object storage</h2>
+  <p><b>Bucket name:</b> ${bucket_name}</p>
+  <p><b>Bucket path:</b> ${bucket_path}</p>
+
+  <h2>Simulated VM</h2>
+  <p><b>VM name:</b> ${vm_name}</p>
+  <p><b>Subnet:</b> ${subnet_name} (${subnet_cidr})</p>
+
+  <h3>VM resources</h3>
+  <pre>${vm_resources_json}</pre>
+</body>
+</html>
